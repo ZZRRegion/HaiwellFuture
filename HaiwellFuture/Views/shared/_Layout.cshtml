@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">*@
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Haiwell</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            HMI
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-controller="HMISearch" asp-action="Index">在线HMI查看</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">工程</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            测试
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                @if (this.signInManager.IsSignedIn(this.User))
+                {
+                    <form method="post" asp-controller="Account" asp-action="Logout" id="f"></form>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="javascript:document.getElementById('f').submit()">登出</a>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="nav navbar-nav">
+                        <li><a asp-controller="Account" asp-action="Login">登录</a></li>
+                        <li><a asp-controller="Account" asp-action="Register">注册</a></li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

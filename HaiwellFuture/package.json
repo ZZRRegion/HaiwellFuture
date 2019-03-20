@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "bootstrap": "3.3.7",
+    "element-ui": "2.6.1",
+    "vue": "2.6.9",
+    "jquery": "3.3.1"
+  }
+}
