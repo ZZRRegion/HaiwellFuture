@@ -21,6 +21,7 @@ namespace HaiwellFuture.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+
             return this.View();
         }
         [HttpPost]

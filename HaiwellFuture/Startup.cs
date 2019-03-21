@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using HaiwellFuture.Middlewares;
 
 namespace HaiwellFuture
 {
@@ -27,6 +28,7 @@ namespace HaiwellFuture
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<Services.IRequestIPRecord, Services.RequestIpRecordServices>();
             services.AddSingleton<Services.IHMISearch, Services.HMISearchServices>();
             services.AddMvc();
             services.AddDbContext<IdentityDbContext>(options => {
@@ -57,6 +59,7 @@ namespace HaiwellFuture
                 RequestPath = "/node_modules",
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules"))
             });
+            app.UseRequestIP();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             app.Run(async (context) =>

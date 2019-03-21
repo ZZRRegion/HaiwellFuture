@@ -1,0 +1,13 @@
+﻿@model HashSet<string>
+@{
+    ViewData["Title"] = "Ip";
+}
+
+<h2>访问IP</h2>
+<ul>
+   @foreach(string ip in this.Model)
+   {
+       <li>@ip</li>
+   }
+</ul>
+
