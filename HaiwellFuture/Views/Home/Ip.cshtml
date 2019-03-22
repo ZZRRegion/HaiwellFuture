@@ -1,10 +1,9 @@
-﻿@using HaiwellFuture.Services;
-
-@model HashSet<IpRecord>
+﻿@using HaiwellFuture.Services
+@model HaiwellFuture.ViewModels.IpViewModel
 @{
     ViewData["Title"] = "Ip";
 }
-
+<script src="~/js/echarts.min.js"></script>
 <h2>访问IP</h2>
 <table border="1" class="table table-striped">
     <thead>
@@ -17,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(IpRecord ip in this.Model)
+        @foreach (IpRecord ip in this.Model.HashIp)
         {
             <tr>
                 <td>@ip.Ip</td>
@@ -27,12 +26,39 @@
                 <td>
                     <form method="post" asp-controller="Home" asp-action="Delete">
                         <input type="hidden" value="@ip.Id" name="id" />
-                        <input type="submit" value="删除" />
+                        <input type="submit" class="btn btn-primary" value="删除" />
                     </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
 
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '访问IP'
+            },
+            tooltip: {},
+            legend: {
+                data:['IP']
+            },
+            xAxis: {
+                data: @this.Html.Raw(this.Model.xAxis)
+            },
+            yAxis: {},
+            series: [{
+                name: '访问次数',
+                type: 'bar',
+                data: @this.Html.Raw(this.Model.series)
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
 

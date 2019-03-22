@@ -32,7 +32,7 @@ namespace HaiwellFuture.Services
 
         public async Task<HashSet<IpRecord>> GetAllIp()
         {
-            return await Task.FromResult(this.lc.FindAll().ToHashSet());
+            return await Task.FromResult(this.lc.FindAll().OrderBy(item => item.Ip).ToHashSet());
         }
 
         public async Task Remove(string id)

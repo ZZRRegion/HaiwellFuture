@@ -29,8 +29,15 @@ namespace HaiwellFuture.Controllers
         }
         public async Task<IActionResult> Ip()
         {
-            HashSet<IpRecord> hash = await this.requestIPRecord.GetAllIp();
-            return this.View(hash);
+            ViewModels.IpViewModel ipViewModel = new ViewModels.IpViewModel();
+            ipViewModel.HashIp = await this.requestIPRecord.GetAllIp();
+            List<string> lstIp = ipViewModel.HashIp.Select(item => item.Ip).ToList();
+            List<int> lstCount = ipViewModel.HashIp.Select(item => item.Count).ToList();
+            ipViewModel.xAxis = Newtonsoft.Json.JsonConvert.SerializeObject(lstIp);
+            ipViewModel.xAxis = ipViewModel.xAxis?.Replace("\"", "\'");
+            ipViewModel.series = Newtonsoft.Json.JsonConvert.SerializeObject(lstCount);
+            ipViewModel.series = ipViewModel.series?.Replace("\"", "\'");
+            return this.View(ipViewModel);
         }
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
