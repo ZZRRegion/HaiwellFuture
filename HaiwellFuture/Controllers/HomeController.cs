@@ -27,6 +27,10 @@ namespace HaiwellFuture.Controllers
         {
             return this.View();
         }
+        /// <summary>
+        /// 访问IP查看
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Ip()
         {
             ViewModels.IpViewModel ipViewModel = new ViewModels.IpViewModel();
