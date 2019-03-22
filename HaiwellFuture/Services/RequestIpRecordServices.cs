@@ -13,23 +13,37 @@ namespace HaiwellFuture.Services
             LiteDB.LiteDatabase ldb = new LiteDB.LiteDatabase("ip.db");
             this.lc = ldb.GetCollection<IpRecord>();
         }
-        public async Task Add(string ip)
+        public async Task Add(IpRecord ip)
         {
-            IpRecord ipRecord = this.lc.FindOne(item => item.Ip == ip);
-            if(ipRecord == null)
+            IpRecord find = this.lc.FindOne(item => item.Ip == ip.Ip);
+            if(find != null)
             {
-                ipRecord = new IpRecord();
-                ipRecord.Ip = ip;
+                find.UserAgent = ip.UserAgent;
+                find.DateTime = DateTime.Now;
+                find.Count = find.Count + 1;
+                this.lc.Update(find);
             }
-            ipRecord.DateTime = DateTime.Now;
-            this.lc.Upsert(ipRecord);
+            else
+            {
+                this.lc.Insert(ip);
+            }
             await Task.CompletedTask;
         }
 
-        public async Task<HashSet<string>> GetAllIp()
+        public async Task<HashSet<IpRecord>> GetAllIp()
         {
-            return await Task.FromResult(this.lc.FindAll().Select(item => item.Ip).ToHashSet());
-
+            return await Task.FromResult(this.lc.FindAll().ToHashSet());
         }
+
+        public async Task Remove(string id)
+        {
+            IpRecord ipRecord = this.lc.FindOne(item => item.Id == id);
+            if(ipRecord != null)
+            {
+                bool b = this.lc.Delete(new LiteDB.BsonValue(id));
+            }
+            await Task.CompletedTask;
+        }
+        
     }
 }

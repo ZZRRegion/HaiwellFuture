@@ -29,8 +29,14 @@ namespace HaiwellFuture.Controllers
         }
         public async Task<IActionResult> Ip()
         {
-            HashSet<string> hash = await this.requestIPRecord.GetAllIp();
+            HashSet<IpRecord> hash = await this.requestIPRecord.GetAllIp();
             return this.View(hash);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.requestIPRecord.Remove(id);
+            return this.RedirectToAction("Ip", "Home");
         }
     }
 }

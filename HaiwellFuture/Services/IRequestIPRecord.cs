@@ -7,7 +7,8 @@ namespace HaiwellFuture.Services
 {
     public interface IRequestIPRecord
     {
-        Task Add(string ip);
-        Task<HashSet<string>> GetAllIp();
+        Task Add(IpRecord ipRecord);
+        Task<HashSet<IpRecord>> GetAllIp();
+        Task Remove(string ip);
     }
 }

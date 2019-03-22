@@ -20,8 +20,16 @@ namespace HaiwellFuture.Middlewares
         }
         public async Task Invoke(HttpContext context)
         {
+            string userAgent = context.Request.Headers["User-Agent"];
+
             string ip = context.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            await this.requestIPRecord.Add(ip);
+            IpRecord ipRecord = new IpRecord
+            {
+                Ip = ip,
+                DateTime = DateTime.Now,
+                UserAgent = userAgent
+            };
+            await this.requestIPRecord.Add(ipRecord);
             await this.next.Invoke(context);
         }
     }
