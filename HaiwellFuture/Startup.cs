@@ -28,9 +28,17 @@ namespace HaiwellFuture
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => {
+                options.AddPolicy("stdio", policy => {
+                    policy.AllowAnyOrigin();
+                });
+            });
+            services.AddScoped<Services.IServerTime, Services.ServerTimeBasket>();
             services.AddSingleton<Services.IRequestIPRecord, Services.RequestIpRecordServices>();
             services.AddSingleton<Services.IHMISearch, Services.HMISearchServices>();
+            services.AddScoped<Services.IProjectScadaView, Services.ProjectScadaService>();
             services.AddMvc();
+           
             services.AddDbContext<IdentityDbContext>(options => {
                 options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("HaiwellFuture"));
             });
@@ -53,6 +61,8 @@ namespace HaiwellFuture
             {
                 app.UseDeveloperExceptionPage();
             }
+            ///允许跨域访问
+            app.UseCors("stdio");
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {

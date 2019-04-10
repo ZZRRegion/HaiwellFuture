@@ -2,30 +2,38 @@
 @{ 
     this.ViewBag.Title = "在线HMI";
 }
-<div style="text-align:center">
-    <a href="#">当前在线：<span class="badge">@this.Model.Count</span></a>
-</div>
-<hr />
-<table border="1" class="table table-striped">
-    <thead>
-        <tr>
-            <td>IP地址</td>
-            <td>设备名称</td>
-            <td>PN码</td>
-            <td>版本</td>
-            <td>工程名称</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(HMISearchViewModel item in this.Model)
-        {
+<div class=" container">
+    <div class="text-left">
+        <h2 class="text-primary">当前在线:<span class="badge">@this.Model.Count</span></h2>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead>
             <tr>
-                <td>@item.ip</td>
+                <td>IP地址</td>
+                <td>设备名称</td>
+                <td>PN码</td>
+                <td>版本</td>
+                <td>工程名称</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (HMISearchViewModel item in this.Model)
+            {
+            <tr>
+                @if (item.ip.Contains("192.168.70."))
+                {
+                    <td class="text-danger">@item.ip</td>
+                }
+                else
+                {
+                    <td>@item.ip</td>
+                }
                 <td>@item.hostname</td>
                 <td>@item.pncode</td>
                 <td>@item.versoft</td>
                 <td>@item.projectname</td>
             </tr>
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
+</div>

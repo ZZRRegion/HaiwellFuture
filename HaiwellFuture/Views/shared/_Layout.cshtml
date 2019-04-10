@@ -17,7 +17,7 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Haiwell</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Haiwell</a>
             </div>
             <div>
                 <ul class="nav navbar-nav">
@@ -31,15 +31,15 @@
                             <li><a asp-controller="Home" asp-action="Ip">访问IP</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">工程</a></li>
+                    <li><a asp-controller="Project" asp-action="Upload">组态工程查看</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            测试
+                            功能
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
+                            <li><a asp-controller="project" asp-action="FileList">已上传文件列表</a></li>
+                            <li><a asp-controller="Tool" asp-action="Index">工具</a></li>
                             <li><a href="#">Jasper Report</a></li>
                             <li class="divider"></li>
                             <li><a href="#">分离的链接</a></li>

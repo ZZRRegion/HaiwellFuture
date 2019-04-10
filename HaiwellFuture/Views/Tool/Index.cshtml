@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "工具";
+}
+<div class="container">
+    <h2 class="text-primary">输入</h2>
+    <script type="text/html" style="display:block">
+        将<替换为&it;和>替换为&gt;
+    </script>
+    <div class="form-group">
+        <textarea class="btn-block" rows="10" id="html"></textarea>
+    </div>
+    <button class="btn btn-primary btn-block" id="my">提交</button>
+    <h2 class="text-primary">输出</h2>
+    <textarea id="back" class="btn-block" rows="10"></textarea>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#html").text("<div>测试</div><p>一下</p>");
+        $("#my").click(function () {
+            var res = $("#html").val();
+            $.post("/Tool/Html", {
+                html: res
+            }, function (resp, status, xhr) {
+                console.log(resp);
+                $("#back").text(resp);
+            })
+    });
+    });
+</script>
